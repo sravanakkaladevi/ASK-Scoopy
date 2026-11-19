@@ -118,11 +118,32 @@
 /* Items Scroll area */
 .cart-items-scroll {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 16px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+/* Sleek custom scrollbar */
+.cart-items-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cart-items-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cart-items-scroll::-webkit-scrollbar-thumb {
+  background: #d8d3e5;
+  border-radius: 999px;
+}
+
+.cart-items-scroll::-webkit-scrollbar-thumb:hover {
+  background: #bfaee8;
 }
 
 .cart-items-list {

@@ -1,227 +1,191 @@
 import { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import {
+  ScoopBlueberry,
+  ScoopMango,
+  ScoopStrawberry,
+  ScoopPistachio,
+  ScoopChoco,
+  ScoopCoconut,
+  IconWaffleCone,
+  IconChocoCone,
+  IconEcoCup,
+  IconBriocheBun,
+  IconHotFudge,
+  IconSundaeBowl,
+} from './CreameryIcons'
 import './CustomSundaeModal.css'
 
-const BASE_FLAVORS = [
-  { id: 'blueberry', name: 'Blueberry Lagoon', color: '#9B7DEA', price: 0 },
-  { id: 'mango', name: 'Mango Sunset', color: '#FF9D5C', price: 0 },
-  { id: 'strawberry', name: 'Strawberry Bliss', color: '#FF87B0', price: 0 },
-  { id: 'pistachio', name: 'Pistachio Dream', color: '#8CB050', price: 40 },
-  { id: 'choco', name: 'Choco Fudge', color: '#8A4E30', price: 40 },
-  { id: 'coconut', name: 'Vegan Coconut Cloud', color: '#3D9970', price: 40 },
+const SCOOPS = [
+  { id: 'blueberry', name: 'Blueberry Lagoon', price: 0, Icon: ScoopBlueberry, extra: 'Free' },
+  { id: 'mango', name: 'Mango Sunset', price: 0, Icon: ScoopMango, extra: 'Free' },
+  { id: 'strawberry', name: 'Strawberry Bliss', price: 0, Icon: ScoopStrawberry, extra: 'Free' },
+  { id: 'pistachio', name: 'Pistachio Dream', price: 40, Icon: ScoopPistachio, extra: '+ ₹40' },
+  { id: 'choco', name: 'Choco Fudge', price: 40, Icon: ScoopChoco, extra: '+ ₹40' },
+  { id: 'coconut', name: 'Vegan Coconut Cloud', price: 40, Icon: ScoopCoconut, extra: '+ ₹40' },
 ]
 
 const VESSELS = [
-  { id: 'waffle-cone', name: 'Crispy Waffle Cone', price: 50, icon: '🍦' },
-  { id: 'choco-cone', name: 'Choco-Dipped Cone', price: 70, icon: '🍫' },
-  { id: 'artisan-cup', name: 'Eco Artisan Cup', price: 0, icon: '🍨' },
-  { id: 'brioche-bun', name: 'Warm Brioche Bun', price: 90, icon: '🥐' },
+  { id: 'waffle-cone', name: 'Crispy Waffle Cone', price: 50, Icon: IconWaffleCone, extra: '+ ₹50' },
+  { id: 'choco-cone', name: 'Choco-Dipped Cone', price: 70, Icon: IconChocoCone, extra: '+ ₹70' },
+  { id: 'artisan-cup', name: 'Eco Artisan Cup', price: 0, Icon: IconEcoCup, extra: 'Free' },
+  { id: 'brioche-bun', name: 'Warm Brioche Bun', price: 90, Icon: IconBriocheBun, extra: '+ ₹90' },
 ]
 
-const DRIZZLES = [
-  { id: 'hot-fudge', name: 'Belgian Hot Fudge', price: 40 },
-  { id: 'salted-caramel', name: 'Salted Caramel Drizzle', price: 40 },
-  { id: 'berry-coulis', name: 'Wild Berry Coulis', price: 40 },
-  { id: 'none', name: 'No Drizzle', price: 0 },
-]
-
-const TOPPINGS = [
-  { id: 'pistachios', name: 'Roasted Pistachios', price: 40 },
-  { id: 'choco-chunks', name: 'Chocolate Flakes', price: 40 },
-  { id: 'rainbow-sprinkles', name: 'Rainbow Sprinkles', price: 30 },
-  { id: 'berries', name: 'Fresh Berries', price: 50 },
-]
+const FUDGE_PRICE = 40 // Belgian Hot Fudge included
+const BASE_PRICE = 260 // Base price
 
 export default function CustomSundaeModal() {
   const { isCustomizerOpen, setIsCustomizerOpen, addToCart, formatPrice } = useCart()
 
-  const [selectedFlavors, setSelectedFlavors] = useState(['blueberry'])
+  const [selectedScoops, setSelectedScoops] = useState(['blueberry'])
   const [selectedVessel, setSelectedVessel] = useState(VESSELS[0])
-  const [selectedDrizzle, setSelectedDrizzle] = useState(DRIZZLES[0])
-  const [selectedToppings, setSelectedToppings] = useState(['choco-chunks'])
-  const creationName = 'Custom Artisan Sundae'
 
   if (!isCustomizerOpen) return null
 
-  const BASE_PRICE = 220
-
-  const toggleFlavor = (fid) => {
-    if (selectedFlavors.includes(fid)) {
-      if (selectedFlavors.length > 1) {
-        setSelectedFlavors(selectedFlavors.filter((id) => id !== fid))
+  const toggleScoop = (sid) => {
+    if (selectedScoops.includes(sid)) {
+      if (selectedScoops.length > 1) {
+        setSelectedScoops(selectedScoops.filter((id) => id !== sid))
       }
     } else {
-      if (selectedFlavors.length < 2) {
-        setSelectedFlavors([...selectedFlavors, fid])
+      if (selectedScoops.length < 2) {
+        setSelectedScoops([...selectedScoops, sid])
       } else {
-        setSelectedFlavors([selectedFlavors[1], fid])
+        // Replace second scoop
+        setSelectedScoops([selectedScoops[0], sid])
       }
     }
   }
 
-  const toggleTopping = (tid) => {
-    if (selectedToppings.includes(tid)) {
-      setSelectedToppings(selectedToppings.filter((id) => id !== tid))
-    } else {
-      setSelectedToppings([...selectedToppings, tid])
-    }
-  }
-
-  const flavorsCost = selectedFlavors.reduce((acc, fid) => {
-    const f = BASE_FLAVORS.find((bf) => bf.id === fid)
-    return acc + (f ? f.price : 0)
+  const scoopsCost = selectedScoops.reduce((acc, sid) => {
+    const s = SCOOPS.find((sc) => sc.id === sid)
+    return acc + (s ? s.price : 0)
   }, 0)
 
   const vesselCost = selectedVessel.price
-  const drizzleCost = selectedDrizzle.price
-  const toppingsCost = selectedToppings.reduce((acc, tid) => {
-    const t = TOPPINGS.find((bt) => bt.id === tid)
-    return acc + (t ? t.price : 0)
-  }, 0)
-
-  const totalPrice = BASE_PRICE + flavorsCost + vesselCost + drizzleCost + toppingsCost
+  const totalPrice = BASE_PRICE + scoopsCost + vesselCost + FUDGE_PRICE
 
   const handleAddCustomSundae = () => {
-    const flavorNames = selectedFlavors
-      .map((fid) => BASE_FLAVORS.find((f) => f.id === fid)?.name)
+    const scoopNames = selectedScoops
+      .map((sid) => SCOOPS.find((s) => s.id === sid)?.name)
       .join(' + ')
-
-    const toppingNames =
-      selectedToppings.length > 0
-        ? selectedToppings.map((tid) => TOPPINGS.find((t) => t.id === tid)?.name).join(', ')
-        : 'None'
 
     const customProduct = {
       id: `custom-sundae-${Date.now()}`,
-      name: creationName,
+      name: `Custom Sundae (${selectedVessel.name})`,
       price: totalPrice,
       image: '/images/Transparent Images/ChatGPT Image Jul 13, 2026, 11_52_05 AM.png',
-      accent: '#9B7DEA',
+      accent: '#8B5CF6',
     }
 
-    const customNotes = `${selectedVessel.name} | ${flavorNames} | ${selectedDrizzle.name} | ${toppingNames}`
+    const customNotes = `${selectedVessel.name} | Scoops: ${scoopNames} | Belgian Hot Fudge`
 
-    addToCart(customProduct, { label: 'Custom Artisan Bowl', price: totalPrice }, 1, customNotes)
+    addToCart(customProduct, { label: 'Custom Artisan Sundae', price: totalPrice }, 1, customNotes)
     setIsCustomizerOpen(false)
   }
 
+  const VesselIcon = selectedVessel.Icon
+
   return (
-    <div className="sundae-modal-overlay" onClick={() => setIsCustomizerOpen(false)}>
-      <div className="sundae-modal-panel" onClick={(e) => e.stopPropagation()}>
-        <div className="sundae-modal-header">
+    <div
+      className="sundae-modal-overlay"
+      onClick={() => setIsCustomizerOpen(false)}
+    >
+      <div
+        className="sundae-dark-modal"
+        onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="sundae-dark-header">
           <div>
-            <span className="sundae-mini-badge">Interactive Creamery</span>
-            <h3 className="sundae-title">Design Your Custom Scoop</h3>
+            <span className="sundae-dark-pill">INTERACTIVE CREAMERY</span>
+            <h2 className="sundae-dark-title">Design Your Custom Scoop</h2>
           </div>
-          <button className="sundae-close-btn" onClick={() => setIsCustomizerOpen(false)}>
+          <button
+            className="sundae-dark-close"
+            onClick={() => setIsCustomizerOpen(false)}
+            aria-label="Close modal"
+          >
             ×
           </button>
         </div>
 
-        <div className="sundae-modal-body">
-          {/* Visual Preview */}
-          <div className="sundae-preview-strip">
-            <span className="vessel-badge">{selectedVessel.icon} {selectedVessel.name}</span>
-            <div className="scoops-row">
-              {selectedFlavors.map((fid) => {
-                const f = BASE_FLAVORS.find((bf) => bf.id === fid)
+        {/* Scrollable Content Body with Custom Dark Scrollbar */}
+        <div className="sundae-dark-body custom-dark-scrollbar">
+          {/* Top Summary Cream Pill Bar */}
+          <div className="sundae-summary-cream-pill">
+            <div className="summary-left-group">
+              <VesselIcon className="summary-vessel-thumb" />
+              <span className="summary-vessel-name">{selectedVessel.name}</span>
+
+              {selectedScoops.map((sid) => {
+                const scoop = SCOOPS.find((s) => s.id === sid)
+                if (!scoop) return null
+                const SIcon = scoop.Icon
                 return (
-                  <span
-                    key={fid}
-                    className="scoop-bubble"
-                    style={{ backgroundColor: f?.color }}
-                    title={f?.name}
-                  />
+                  <span key={sid} className="summary-scoop-item" title={scoop.name}>
+                    <SIcon className="summary-scoop-thumb" />
+                  </span>
                 )
               })}
+
+              <IconHotFudge className="summary-fudge-thumb" />
+              <span className="summary-fudge-name">Belgian Hot Fudge</span>
             </div>
-            {selectedDrizzle.id !== 'none' && (
-              <span className="drizzle-badge">🍯 {selectedDrizzle.name}</span>
-            )}
-            <span className="total-badge">{formatPrice(totalPrice)}</span>
+
+            <div className="summary-price-tag">
+              {formatPrice(totalPrice)}
+            </div>
           </div>
 
-          {/* Step 1: Base Flavors */}
-          <div className="step-block">
-            <span className="step-label">1. Choose Scoops (Pick 1 or 2):</span>
-            <div className="chip-grid">
-              {BASE_FLAVORS.map((f) => {
-                const isSel = selectedFlavors.includes(f.id)
+          {/* Section 1: Choose Scoops */}
+          <div className="sundae-section-block">
+            <h4 className="sundae-section-heading">1. CHOOSE SCOOPS (PICK 1 OR 2):</h4>
+            <div className="sundae-cards-grid">
+              {SCOOPS.map((scoop) => {
+                const isSelected = selectedScoops.includes(scoop.id)
+                const SIcon = scoop.Icon
                 return (
                   <button
-                    key={f.id}
+                    key={scoop.id}
                     type="button"
-                    className={`custom-chip ${isSel ? 'is-selected' : ''}`}
-                    onClick={() => toggleFlavor(f.id)}
+                    className={`sundae-option-card ${isSelected ? 'is-selected' : ''}`}
+                    onClick={() => toggleScoop(scoop.id)}
                   >
-                    <span className="swatch" style={{ backgroundColor: f.color }} />
-                    <span>{f.name}</span>
-                    {f.price > 0 && <span className="chip-extra">+{formatPrice(f.price)}</span>}
+                    <SIcon className="option-card-thumb" />
+                    <div className="option-card-text">
+                      <span className="option-card-name">{scoop.name}</span>
+                    </div>
+                    {scoop.price > 0 && (
+                      <span className="option-card-price">{scoop.extra}</span>
+                    )}
                   </button>
                 )
               })}
             </div>
           </div>
 
-          {/* Step 2: Vessels */}
-          <div className="step-block">
-            <span className="step-label">2. Select Vessel:</span>
-            <div className="chip-grid">
-              {VESSELS.map((v) => {
-                const isSel = selectedVessel.id === v.id
+          {/* Section 2: Select Vessel */}
+          <div className="sundae-section-block">
+            <h4 className="sundae-section-heading">2. SELECT VESSEL:</h4>
+            <div className="sundae-cards-grid">
+              {VESSELS.map((vessel) => {
+                const isSelected = selectedVessel.id === vessel.id
+                const VIcon = vessel.Icon
                 return (
                   <button
-                    key={v.id}
+                    key={vessel.id}
                     type="button"
-                    className={`custom-chip ${isSel ? 'is-selected' : ''}`}
-                    onClick={() => setSelectedVessel(v)}
+                    className={`sundae-option-card ${isSelected ? 'is-selected' : ''}`}
+                    onClick={() => setSelectedVessel(vessel)}
                   >
-                    <span>{v.icon}</span>
-                    <span>{v.name}</span>
-                    <span className="chip-extra">{v.price === 0 ? 'Free' : `+${formatPrice(v.price)}`}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Step 3: Drizzle */}
-          <div className="step-block">
-            <span className="step-label">3. Warm Drizzle:</span>
-            <div className="chip-grid">
-              {DRIZZLES.map((d) => {
-                const isSel = selectedDrizzle.id === d.id
-                return (
-                  <button
-                    key={d.id}
-                    type="button"
-                    className={`custom-chip ${isSel ? 'is-selected' : ''}`}
-                    onClick={() => setSelectedDrizzle(d)}
-                  >
-                    <span>{d.name}</span>
-                    <span className="chip-extra">{d.price === 0 ? 'Free' : `+${formatPrice(d.price)}`}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Step 4: Toppings */}
-          <div className="step-block">
-            <span className="step-label">4. Gourmet Toppings:</span>
-            <div className="chip-grid">
-              {TOPPINGS.map((t) => {
-                const isSel = selectedToppings.includes(t.id)
-                return (
-                  <button
-                    key={t.id}
-                    type="button"
-                    className={`custom-chip ${isSel ? 'is-selected' : ''}`}
-                    onClick={() => toggleTopping(t.id)}
-                  >
-                    <span>{isSel ? '✓ ' : '+ '}</span>
-                    <span>{t.name}</span>
-                    <span className="chip-extra">+{formatPrice(t.price)}</span>
+                    <VIcon className="option-card-thumb" />
+                    <div className="option-card-text">
+                      <span className="option-card-name">{vessel.name}</span>
+                    </div>
+                    <span className="option-card-price">{vessel.extra}</span>
                   </button>
                 )
               })}
@@ -229,14 +193,20 @@ export default function CustomSundaeModal() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="sundae-modal-footer">
-          <div className="sundae-footer-pricing">
-            <span className="footer-label">Total Custom Creation:</span>
-            <span className="footer-price">{formatPrice(totalPrice)}</span>
+        {/* Sticky Dark Footer */}
+        <div className="sundae-dark-footer">
+          <div className="footer-price-info">
+            <span className="footer-price-label">TOTAL CUSTOM CREATION:</span>
+            <span className="footer-price-amount">{formatPrice(totalPrice)}</span>
           </div>
-          <button className="sundae-add-btn" onClick={handleAddCustomSundae}>
-            Add Custom Sundae to Bag 🍨
+
+          <button
+            type="button"
+            className="sundae-cta-btn"
+            onClick={handleAddCustomSundae}
+          >
+            <span>Add Custom Sundae to Bag</span>
+            <IconSundaeBowl className="cta-sundae-icon" />
           </button>
         </div>
       </div>

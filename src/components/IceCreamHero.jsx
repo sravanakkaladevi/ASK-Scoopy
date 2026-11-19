@@ -50,8 +50,11 @@ const IceCreamHero = () => {
   const {
     addToCart,
     cartCount,
+    isCartOpen,
     setIsCartOpen,
+    isCustomizerOpen,
     setIsCustomizerOpen,
+    isCheckoutOpen,
     setActiveFlavor,
     formatPrice,
   } = useCart()
@@ -67,9 +70,13 @@ const IceCreamHero = () => {
     setActiveFlavor(current)
   }, [current, setActiveFlavor])
 
-  // Smooth wheel listener
+  // Smooth wheel listener (only when no drawers or modals are active)
   useEffect(() => {
     const onWheel = (e) => {
+      if (isCartOpen || isCustomizerOpen || isCheckoutOpen) return
+      if (e.target && e.target.closest && e.target.closest('.cart-drawer-panel, .sundae-modal-panel, .checkout-modal-container, .uiverse-currency-menu')) {
+        return
+      }
       if (cooling.current || Math.abs(e.deltaY) < WHEEL_THRESHOLD) return
       cooling.current = true
       if (e.deltaY > 0) next()
@@ -80,7 +87,7 @@ const IceCreamHero = () => {
     }
     window.addEventListener('wheel', onWheel, { passive: true })
     return () => window.removeEventListener('wheel', onWheel)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isCartOpen, isCustomizerOpen, isCheckoutOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Keyboard navigation
   useEffect(() => {

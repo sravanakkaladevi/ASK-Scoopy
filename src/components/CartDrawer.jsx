@@ -55,7 +55,11 @@ export default function CartDrawer() {
 
   return (
     <div className="cart-drawer-overlay" onClick={() => setIsCartOpen(false)}>
-      <aside className="cart-drawer-panel" onClick={(e) => e.stopPropagation()}>
+      <aside
+        className="cart-drawer-panel"
+        onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
+      >
         {/* Drawer Header */}
         <div className="cart-drawer-header">
           <div className="header-title-row">
