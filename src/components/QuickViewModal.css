@@ -1,0 +1,290 @@
+.quickview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 14, 24, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: overlay-fade-in 0.25s ease forwards;
+}
+
+.quickview-modal {
+  background: #fff;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 780px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: modal-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.quickview-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #333;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.quickview-close-btn:hover {
+  background: #fff;
+  transform: scale(1.05);
+}
+
+.quickview-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+}
+
+.quickview-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  min-height: 380px;
+}
+
+.quickview-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.quickview-img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3));
+}
+
+.quickview-info {
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.quickview-cat {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #7c55d6;
+  letter-spacing: 0.05em;
+}
+
+.quickview-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: #1a1a24;
+  margin: 4px 0 2px;
+}
+
+.quickview-tagline {
+  font-size: 0.86rem;
+  color: #6a6a78;
+  margin-bottom: 12px;
+}
+
+.quickview-desc {
+  font-size: 0.88rem;
+  color: #4a4a58;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* Nutrition grid */
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: #f7f7fa;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.nutrition-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.nut-label {
+  font-size: 0.68rem;
+  color: #8c8c99;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.nut-val {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #1a1a24;
+}
+
+.allergen-box {
+  background: #fff8e7;
+  border-left: 3px solid #f39c12;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.allergen-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #b7791f;
+  margin-right: 6px;
+}
+
+.allergen-desc {
+  font-size: 0.74rem;
+  color: #744210;
+}
+
+/* Sizes */
+.quickview-size-selector {
+  margin-bottom: 20px;
+}
+
+.size-label {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6a6a78;
+  margin-bottom: 6px;
+}
+
+.size-buttons-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.size-btn {
+  background: #f7f7fa;
+  border: 1px solid #e0e0ea;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.size-btn.is-selected {
+  background: #1c1b24;
+  color: #fff;
+  border-color: #1c1b24;
+}
+
+.s-price {
+  opacity: 0.85;
+  font-weight: 700;
+}
+
+/* Action row */
+.quickview-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.quickview-stepper {
+  display: flex;
+  align-items: center;
+  background: #f0f0f5;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.q-step-btn {
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  color: #222;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.q-step-val {
+  min-width: 24px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.quickview-add-btn {
+  flex: 1;
+  background: #7c55d6;
+  color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 14px rgba(124, 85, 214, 0.3);
+  transition: all 0.2s ease;
+}
+
+.quickview-add-btn:hover {
+  background: #6a44c7;
+}
+
+.quickview-fav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f5f5fa;
+  color: #8c8c99;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.quickview-fav-btn.is-fav {
+  background: #ffe8ee;
+  color: #ff4d6d;
+}
+
+@media (max-width: 768px) {
+  .quickview-layout {
+    grid-template-columns: 1fr;
+  }
+  .quickview-visual {
+    min-height: 220px;
+  }
+}

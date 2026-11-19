@@ -1,0 +1,419 @@
+.checkout-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 12, 22, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: overlay-fade-in 0.25s ease forwards;
+}
+
+.checkout-modal-container {
+  background: #fff;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: modal-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modal-pop {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-close-icon {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: transparent;
+  color: #8c8c99;
+  font-size: 1.8rem;
+  line-height: 1;
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+.modal-close-icon:hover {
+  color: #111;
+}
+
+/* Steps bar */
+.checkout-steps-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
+
+.step-indicator.is-active {
+  opacity: 1;
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #7c55d6;
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-txt {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1a1a24;
+}
+
+.step-connector {
+  width: 32px;
+  height: 2px;
+  background: #e4e4ed;
+}
+
+.modal-header {
+  margin-bottom: 22px;
+}
+
+.modal-title {
+  font-size: 1.35rem;
+  color: #1a1a24;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+}
+
+.modal-subtitle {
+  font-size: 0.84rem;
+  color: #6a6a78;
+}
+
+.form-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.field-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #4a4a58;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #dcdce6;
+  font-family: inherit;
+  font-size: 0.88rem;
+  outline: none;
+  background: #fbfbfd;
+  transition: border-color 0.2s ease;
+}
+
+.modal-input:focus {
+  border-color: #7c55d6;
+  background: #fff;
+}
+
+/* Delivery Slots */
+.delivery-slots-box {
+  margin-bottom: 20px;
+}
+
+.slot-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.slot-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #e7e7f0;
+  cursor: pointer;
+  background: #fafafc;
+  transition: all 0.2s ease;
+}
+
+.slot-option.is-selected {
+  border-color: #7c55d6;
+  background: #fbf9ff;
+  box-shadow: 0 4px 12px rgba(124, 85, 214, 0.1);
+}
+
+.slot-title {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1a1a24;
+}
+
+.slot-desc {
+  display: block;
+  font-size: 0.74rem;
+  color: #777788;
+}
+
+/* Payment tabs */
+.payment-method-box {
+  margin-bottom: 22px;
+}
+
+.payment-tabs-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  margin-bottom: 14px;
+}
+
+.payment-tab {
+  flex: 1;
+  background: #f5f5f9;
+  border: 1px solid #e2e2ec;
+  padding: 8px 6px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #444;
+  transition: all 0.2s ease;
+}
+
+.payment-tab.is-active {
+  background: #1c1b24;
+  color: #fff;
+  border-color: #1c1b24;
+}
+
+.mock-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  background: #fbfbfd;
+  border-radius: 12px;
+  border: 1px solid #e8e8f0;
+}
+
+/* Strip */
+.checkout-summary-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: #f6f3fc;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.strip-price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #7c55d6;
+}
+
+.step-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-back-btn {
+  background: #f0f0f5;
+  color: #555;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.modal-primary-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #7c55d6;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(124, 85, 214, 0.35);
+  transition: all 0.2s ease;
+}
+
+.modal-primary-btn:hover {
+  background: #6a44c7;
+  transform: translateY(-1px);
+}
+
+/* Step 3: Success view */
+.checkout-success-view {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.celebration-confetti {
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+  animation: bounce-confetti 1.2s infinite ease-in-out;
+}
+
+@keyframes bounce-confetti {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.success-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: #1a1a24;
+  margin-bottom: 8px;
+}
+
+.success-subtitle {
+  font-size: 0.92rem;
+  color: #5c5c6e;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.order-ticket-card {
+  background: #faf8fe;
+  border-radius: 16px;
+  border: 1px solid #ede8f8;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.ticket-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ebe5f5;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.ticket-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #8c8c99;
+}
+
+.ticket-id {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #7c55d6;
+}
+
+.ticket-status-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #2980b9;
+  background: #ebf5fb;
+  padding: 4px 10px;
+  border-radius: 99px;
+}
+
+.ticket-delivery-info {
+  font-size: 0.84rem;
+  color: #4a4a58;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.order-live-tracker {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding-top: 10px;
+}
+
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  color: #999;
+  font-weight: 600;
+  text-align: center;
+  flex: 1;
+}
+
+.tracker-step.is-complete {
+  color: #27ae60;
+}
+
+.tracker-step.is-current {
+  color: #7c55d6;
+  font-weight: 800;
+}
+
+.tracker-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f0f0f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+}
+
+.tracker-step.is-complete .tracker-dot {
+  background: #27ae60;
+  color: #fff;
+}
+
+.tracker-step.is-current .tracker-dot {
+  background: #7c55d6;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(124, 85, 214, 0.4);
+}

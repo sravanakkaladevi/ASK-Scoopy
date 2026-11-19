@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary screenshot captures
+screenshot*.png
+take-screenshot.js
+
+# Vercel
+.vercel
+

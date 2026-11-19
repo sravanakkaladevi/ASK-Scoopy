@@ -1,0 +1,88 @@
+{
+  "project": "Scoopy Artisan Ice Cream E-Commerce",
+  "branchName": "ralph/ice-cream-ecommerce-dynamic-ui",
+  "description": "High-converting, small-batch artisanal ice cream e-commerce platform with interactive flavor showcase hero slider, custom sundae builder, dynamic shopping cart and checkout, and dynamic customer reviews/comments system.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Interactive Hero Slider with Serving Size Selection",
+      "description": "As a customer visiting the site, I want to explore core artisan flavors with 3D flying scoops, particles, and choose my portion size so that I can add it directly to my bag.",
+      "acceptanceCriteria": [
+        "Framer Motion animations for title, image, particles, and upcoming preview stack work smoothly",
+        "Serving size selector (Single Scoop, Double, Pint, Tub) updates displayed price dynamically",
+        "Add to Cart triggers immediate visual toast confirmation",
+        "Next and Prev controls and keyboard arrows cycle flavors without trapping page scroll",
+        "Typecheck and Vite build pass"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Implemented in src/components/IceCreamHero.jsx and IceCreamHero.css"
+    },
+    {
+      "id": "US-002",
+      "title": "Shop Catalog with Search, Category and Dietary Filters",
+      "description": "As a shopper, I want to filter by category (Signature, Bundles, Vegan) and dietary preferences (Gluten-Free, Organic, Nut-Free) and search keywords so that I find my ideal frozen treat.",
+      "acceptanceCriteria": [
+        "Search bar filters by name, ingredient, and category in real time",
+        "Dietary pill filters allow multi-selection (Gluten-Free, Organic, etc.)",
+        "Sorting dropdown handles price (asc/desc), ratings, and popularity",
+        "Product cards display badges, ratings, quantity stepper, and quick view details trigger",
+        "Typecheck and Vite build pass"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Implemented in src/components/ShopCatalog.jsx and ShopCatalog.css"
+    },
+    {
+      "id": "US-003",
+      "title": "Interactive Custom Sundae Builder",
+      "description": "As an ice cream lover, I want to create a custom sundae by selecting 1 or 2 scoop flavors, a waffle cone or bowl, warm drizzle, and crunch toppings with live price calculation.",
+      "acceptanceCriteria": [
+        "Step 1 selects 1-2 base scoop flavors with colored swatches",
+        "Step 2 selects serving vessel (Crispy Waffle Cone, Choco Cone, Cup, Brioche)",
+        "Step 3 selects artisan drizzle (Hot Fudge, Salted Caramel, Berry Coulis)",
+        "Step 4 selects toppings with multi-select checkboxes",
+        "Live summary card computes total price dynamically and adds customized creation with detailed recipe notes to cart",
+        "Typecheck and Vite build pass"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Implemented in src/components/CustomSundaeBuilder.jsx"
+    },
+    {
+      "id": "US-004",
+      "title": "Dynamic Customer Reviews & Comments UI",
+      "description": "As a customer, I want to read verified customer reviews, filter by star rating and flavor, vote reviews as helpful, write my own review with interactive stars and taste tags, and reply to existing reviews.",
+      "acceptanceCriteria": [
+        "Aggregate average rating and star breakdown bars update dynamically when reviews are added",
+        "Interactive 5-star rating selector with hover preview sentiment labels",
+        "Review submission form adds review immediately to state and persists to localStorage",
+        "Helpful upvote button increments count and animates with animejs",
+        "Inline reply form allows nested replies to any review thread",
+        "Filter reviews by stars, flavor, and search keywords",
+        "Typecheck and Vite build pass"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Implemented in src/components/DynamicReviews.jsx using animejs for micro-interactions and localStorage persistence"
+    },
+    {
+      "id": "US-005",
+      "title": "Slide-Out Cart Drawer and Simulated Multi-Step Checkout",
+      "description": "As a buyer, I want to view my cart drawer, adjust quantities, see a free-shipping progress meter, apply promo codes (SCOOPY20), choose tip amount, and complete a simulated checkout with celebratory confetti.",
+      "acceptanceCriteria": [
+        "Cart drawer slides in with backdrop blur and responsive layout",
+        "Quantity steppers increment/decrement and remove items when reduced to zero",
+        "Free cold-chain shipping progress meter recalculates against $35 threshold",
+        "Promo code engine validates SCOOPY20 (20% off), SWEET5 ($5 off), and FREESHIP",
+        "Multi-step checkout collects cold delivery address, express 45-min courier slot, and payment method",
+        "Confetti explosion triggers via canvas-confetti upon order confirmation and issues a live tracking order ID",
+        "Cart and wishlist persist in localStorage",
+        "Typecheck and Vite build pass"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Implemented in CartContext.jsx, CartDrawer.jsx, and CheckoutModal.jsx"
+    }
+  ]
+}

@@ -1,0 +1,510 @@
+.reviews-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 20, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  animation: overlay-fade 0.25s ease forwards;
+}
+
+@keyframes overlay-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reviews-drawer-panel {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  animation: panel-slide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes panel-slide {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.reviews-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: #1a1a24;
+  margin: 0;
+}
+
+.drawer-count-badge {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #7c55d6;
+  background: #f1ecfc;
+  padding: 3px 8px;
+  border-radius: 99px;
+}
+
+.drawer-close-btn {
+  background: transparent;
+  color: #8c8c99;
+  font-size: 1.8rem;
+  line-height: 1;
+  border-radius: 6px;
+  padding: 0 4px;
+}
+
+.drawer-close-btn:hover {
+  color: #111;
+}
+
+.reviews-drawer-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Rating Card */
+.drawer-rating-card {
+  background: #faf8fe;
+  border-radius: 16px;
+  padding: 16px 20px;
+  border: 1px solid #eee8f8;
+}
+
+.rating-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.rating-score-box {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.rating-big-num {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #1a1a24;
+}
+
+.rating-stars {
+  color: #f39c12;
+  font-size: 0.95rem;
+}
+
+.rating-sub {
+  font-size: 0.7rem;
+  color: #888;
+}
+
+.drawer-write-cta {
+  background: #1c1b24;
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.drawer-write-cta:hover {
+  background: #7c55d6;
+}
+
+.rating-bars-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bar-row-mini {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.bar-track-mini {
+  flex: 1;
+  height: 5px;
+  background: #eae8f2;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar-fill-mini {
+  height: 100%;
+  background: #7c55d6;
+  border-radius: 99px;
+}
+
+/* Review Form */
+.drawer-review-form {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1.5px solid #7c55d6;
+  box-shadow: 0 6px 20px rgba(124, 85, 214, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-title {
+  font-size: 1rem;
+  color: #1a1a24;
+  margin: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.star-picker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star-pick-btn {
+  background: transparent;
+  font-size: 1.5rem;
+  color: #ddd;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.star-pick-btn.is-active {
+  color: #f39c12;
+}
+
+.star-sentiment {
+  font-size: 0.76rem;
+  color: #7c55d6;
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.drawer-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #dcdce6;
+  font-family: inherit;
+  font-size: 0.82rem;
+  outline: none;
+  background: #fbfbfd;
+}
+
+.drawer-input:focus {
+  border-color: #7c55d6;
+  background: #fff;
+}
+
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-chip {
+  background: #f2f2f7;
+  border: 1px solid #e0e0ea;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #555;
+  padding: 3px 10px;
+  border-radius: 99px;
+  cursor: pointer;
+}
+
+.tag-chip.is-active {
+  background: #7c55d6;
+  color: #fff;
+  border-color: #7c55d6;
+}
+
+.submit-btn {
+  background: #7c55d6;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #6a44c7;
+}
+
+/* Filter chips */
+.drawer-filter-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: #f4f4f8;
+  border: 1px solid #e2e2ec;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #555;
+  padding: 4px 12px;
+  border-radius: 99px;
+}
+
+.chip.is-active {
+  background: #1c1b24;
+  color: #fff;
+  border-color: #1c1b24;
+}
+
+/* Comments List */
+.drawer-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.comment-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  border: 1px solid #edeef2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-meta {
+  flex: 1;
+}
+
+.comment-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comment-author {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #1a1a24;
+}
+
+.verified-badge {
+  font-size: 0.65rem;
+  color: #27ae60;
+  background: #e8f8f0;
+  padding: 1px 6px;
+  border-radius: 99px;
+  font-weight: 700;
+}
+
+.comment-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #8c8c99;
+}
+
+.comment-stars {
+  color: #f39c12;
+}
+
+.comment-flavor-name {
+  color: #7c55d6;
+  font-weight: 600;
+}
+
+.comment-headline {
+  font-size: 0.9rem;
+  color: #1a1a24;
+  margin: 0 0 4px;
+}
+
+.comment-body {
+  font-size: 0.82rem;
+  color: #4a4a58;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.comment-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.t-pill {
+  font-size: 0.68rem;
+  background: #f0f0f5;
+  color: #555;
+  padding: 2px 7px;
+  border-radius: 99px;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid #f2f2f6;
+  padding-top: 8px;
+}
+
+.action-btn {
+  background: transparent;
+  color: #777;
+  font-size: 0.74rem;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.action-btn:hover {
+  color: #111;
+  background: #f4f4f8;
+}
+
+.action-btn.is-voted {
+  color: #27ae60;
+  font-weight: 700;
+}
+
+/* Replies */
+.replies-list {
+  margin-top: 8px;
+  padding-left: 12px;
+  border-left: 2px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reply-bubble {
+  background: #f8f8fc;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.reply-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.reply-author {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #1a1a24;
+}
+
+.team-badge {
+  font-size: 0.6rem;
+  color: #7c55d6;
+  background: #f1ecfc;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.reply-date {
+  font-size: 0.66rem;
+  color: #999;
+}
+
+.reply-msg {
+  font-size: 0.78rem;
+  color: #4a4a58;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.reply-composer {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  padding-left: 12px;
+}
+
+.reply-box {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 99px;
+  border: 1px solid #dcdce6;
+  font-size: 0.78rem;
+  outline: none;
+}
+
+.reply-send-btn {
+  background: #7c55d6;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { flavors } from '../data/flavors'
+import { products } from '../data/products'
+import { useCart } from '../context/CartContext'
 import SocialIcons from './SocialIcons'
 import './IceCreamHero.css'
 
 const BG_TRANSITION = { duration: 0.7, ease: 'easeInOut' }
-const WHEEL_COOLDOWN = 900
+const WHEEL_COOLDOWN = 800
 const WHEEL_THRESHOLD = 12
 
 const NAME_VARIANTS = {
@@ -18,12 +20,6 @@ const TEXT_VARIANTS = {
   initial: { y: 20, opacity: 0 },
   animate: { y: 0, opacity: 1, transition: { duration: 0.5, delay: 0.1, ease: 'easeOut' } },
   exit: { y: -20, opacity: 0, transition: { duration: 0.3, ease: 'easeIn' } },
-}
-
-const BTN_VARIANTS = {
-  initial: { y: 16, opacity: 0 },
-  animate: { y: 0, opacity: 1, transition: { duration: 0.5, delay: 0.18, ease: 'easeOut' } },
-  exit: { y: 16, opacity: 0, transition: { duration: 0.25, ease: 'easeIn' } },
 }
 
 const FLY_VARIANTS = {
@@ -48,12 +44,29 @@ const IceCreamHero = () => {
   const [index, setIndex] = useState(0)
   const len = flavors.length
   const current = flavors[index]
+  const currentProduct = products.find((p) => p.id === current.id) || products[0]
+
+  const {
+    addToCart,
+    cartCount,
+    setIsCartOpen,
+    setIsReviewsOpen,
+    setIsCustomizerOpen,
+    setActiveFlavor,
+  } = useCart()
+
   const [line1, line2] = current.name.split('\n')
   const cooling = useRef(false)
 
   const next = () => setIndex((i) => (i + 1) % len)
   const prev = () => setIndex((i) => (i - 1 + len) % len)
 
+  // Sync active flavor for reviews
+  useEffect(() => {
+    setActiveFlavor(current)
+  }, [current, setActiveFlavor])
+
+  // Smooth wheel listener
   useEffect(() => {
     const onWheel = (e) => {
       if (cooling.current || Math.abs(e.deltaY) < WHEEL_THRESHOLD) return
@@ -66,9 +79,27 @@ const IceCreamHero = () => {
     }
     window.addEventListener('wheel', onWheel, { passive: true })
     return () => window.removeEventListener('wheel', onWheel)
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const upcoming = [flavors[(index + 1) % len], flavors[(index + 2) % len], flavors[(index + 3) % len]]
+  // Keyboard navigation
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next()
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const upcoming = [
+    flavors[(index + 1) % len],
+    flavors[(index + 2) % len],
+    flavors[(index + 3) % len],
+  ]
+
+  const handleOrder = () => {
+    addToCart(currentProduct, { label: 'Single Scoop', price: currentProduct.price }, 1)
+  }
 
   return (
     <motion.section
@@ -76,10 +107,51 @@ const IceCreamHero = () => {
       animate={{ background: current.gradient }}
       transition={BG_TRANSITION}
     >
+      {/* Top Header */}
       <div className="icecream-top">
         <div className="icecream-logo">Scoopy</div>
+
+        {/* Sleek Frosted Glass E-Commerce Controls */}
+        <div className="icecream-top-nav">
+          <div className="top-currency-tag" title="Prices in Indian Rupee">
+            <span>🇮🇳 ₹ INR</span>
+          </div>
+
+          <button
+            className="top-nav-pill"
+            onClick={() => setIsCustomizerOpen(true)}
+            title="Design a customized sundae with toppings"
+          >
+            <span>🍦 Ask Ice Cream / Custom</span>
+          </button>
+
+          <button
+            className="top-nav-pill"
+            onClick={() => setIsReviewsOpen(true)}
+            title="Read customer reviews and dynamic comments"
+          >
+            <span>💬 Reviews ★ 4.9</span>
+          </button>
+
+          <button
+            className="top-nav-pill top-nav-pill--cart"
+            onClick={() => setIsCartOpen(true)}
+            title="View shopping bag"
+          >
+            <span className="cart-svg-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+            </span>
+            <span>Bag</span>
+            {cartCount > 0 && <span className="top-cart-badge">{cartCount}</span>}
+          </button>
+        </div>
       </div>
 
+      {/* Upcoming stacked ice cream previews on right */}
       <div className="icecream-stack-stage" aria-hidden="true">
         <AnimatePresence mode="popLayout">
           <motion.img
@@ -119,6 +191,7 @@ const IceCreamHero = () => {
         </AnimatePresence>
       </div>
 
+      {/* Center 3D Floating Ice Cream Visual Stage */}
       <div className="icecream-visual-stage">
         <AnimatePresence mode="popLayout">
           <motion.img
@@ -147,7 +220,20 @@ const IceCreamHero = () => {
         </AnimatePresence>
       </div>
 
+      {/* Left Content Area */}
       <div className="icecream-content">
+        {/* Rating Pill */}
+        <button
+          className="hero-rating-badge"
+          onClick={() => setIsReviewsOpen(true)}
+          title="Click to view customer comments"
+        >
+          <span className="star-icon">★</span>
+          <span className="rating-val">4.9</span>
+          <span className="rating-dot">•</span>
+          <span className="rating-caption">Community Reviews</span>
+        </button>
+
         <h1 className="icecream-title" aria-live="polite">
           <AnimatePresence mode="popLayout">
             <motion.span
@@ -178,22 +264,33 @@ const IceCreamHero = () => {
           </AnimatePresence>
         </div>
 
-        <div className="icecream-order">
-          <AnimatePresence mode="popLayout">
-            <motion.button
-              key={current.id}
-              className="icecream-order-btn"
-              variants={BTN_VARIANTS}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              Order Now
-            </motion.button>
-          </AnimatePresence>
+        <div className="icecream-order-row">
+          <button
+            className="icecream-order-btn"
+            onClick={handleOrder}
+          >
+            <span>Order Scoop • ${currentProduct.price.toFixed(2)}</span>
+          </button>
+
+          <button
+            className="icecream-ask-btn"
+            onClick={() => setIsCustomizerOpen(true)}
+            title="Ask ice cream with toppings, waffle cone, warm drizzle"
+          >
+            <span>Custom Creation ✦</span>
+          </button>
         </div>
       </div>
 
+      {/* Floating Arrows */}
+      <button className="slider-arrow slider-arrow--prev" onClick={prev} aria-label="Previous flavor">
+        ‹
+      </button>
+      <button className="slider-arrow slider-arrow--next" onClick={next} aria-label="Next flavor">
+        ›
+      </button>
+
+      {/* Dots */}
       <div className="icecream-dots">
         {flavors.map((flavor, i) => (
           <button
