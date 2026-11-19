@@ -126,3 +126,20 @@
   font-weight: 800;
   font-size: 0.85rem;
 }
+
+@media (max-width: 600px) {
+  .uiverse-currency-trigger {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    gap: 5px;
+  }
+
+  .uiverse-curr-flag {
+    font-size: 0.95rem;
+  }
+
+  .uiverse-currency-menu {
+    left: auto;
+    right: 0;
+  }
+}

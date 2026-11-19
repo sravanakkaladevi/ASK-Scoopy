@@ -61,9 +61,36 @@ const IceCreamHero = () => {
 
   const [line1, line2] = current.name.split('\n')
   const cooling = useRef(false)
+  const touchStartX = useRef(null)
+  const touchStartY = useRef(null)
 
   const next = () => setIndex((i) => (i + 1) % len)
   const prev = () => setIndex((i) => (i - 1 + len) % len)
+
+  const handleTouchStart = (e) => {
+    if (isCartOpen || isCustomizerOpen || isCheckoutOpen) return
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+  }
+
+  const handleTouchEnd = (e) => {
+    if (isCartOpen || isCustomizerOpen || isCheckoutOpen) return
+    if (touchStartX.current === null || touchStartY.current === null) return
+
+    const diffX = touchStartX.current - e.changedTouches[0].clientX
+    const diffY = touchStartY.current - e.changedTouches[0].clientY
+
+    // Minimum swipe threshold 35px, predominantly horizontal
+    if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) {
+        next()
+      } else {
+        prev()
+      }
+    }
+    touchStartX.current = null
+    touchStartY.current = null
+  }
 
   // Sync active flavor for reviews
   useEffect(() => {
@@ -114,6 +141,8 @@ const IceCreamHero = () => {
       className="icecream-hero"
       animate={{ background: current.gradient }}
       transition={BG_TRANSITION}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Top Header */}
       <div className="icecream-top">
@@ -268,19 +297,21 @@ const IceCreamHero = () => {
         </div>
       </div>
 
-      {/* Dots */}
-      <div className="icecream-dots">
-        {flavors.map((flavor, i) => (
-          <button
-            key={flavor.id}
-            className={`icecream-dot${i === index ? ' is-active' : ''}`}
-            aria-label={`Show ${flavor.name.replace('\n', ' ')}`}
-            onClick={() => setIndex(i)}
-          />
-        ))}
-      </div>
+      {/* Bottom Bar: Dots & Social Link */}
+      <div className="icecream-bottom-bar">
+        <div className="icecream-dots">
+          {flavors.map((flavor, i) => (
+            <button
+              key={flavor.id}
+              className={`icecream-dot${i === index ? ' is-active' : ''}`}
+              aria-label={`Show ${flavor.name.replace('\n', ' ')}`}
+              onClick={() => setIndex(i)}
+            />
+          ))}
+        </div>
 
-      <SocialIcons className="icecream-socials social-icons--plain" />
+        <SocialIcons className="icecream-socials social-icons--plain" />
+      </div>
     </motion.section>
   )
 }

@@ -441,3 +441,27 @@
   color: #fff;
   box-shadow: 0 0 10px rgba(124, 85, 214, 0.4);
 }
+
+@media (max-width: 600px) {
+  .checkout-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .checkout-modal-container {
+    padding: 22px 18px;
+    border-radius: 24px 24px 0 0;
+    max-height: 92vh;
+    border-bottom: none;
+  }
+
+  .checkout-steps-bar {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .form-row-2col {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

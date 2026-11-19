@@ -293,6 +293,11 @@
   transform: translateY(-2px);
 }
 
+/* Bottom Bar Container */
+.icecream-bottom-bar {
+  display: contents;
+}
+
 /* Dots */
 .icecream-dots {
   position: absolute;
@@ -311,6 +316,8 @@
   background: rgba(255, 255, 255, 0.4);
   transition: all 0.25s ease;
   cursor: pointer;
+  border: none;
+  padding: 0;
 }
 
 .icecream-dot.is-active {
@@ -338,51 +345,265 @@
   }
 }
 
-@media (max-width: 860px), (max-height: 560px) {
+@media (max-width: 860px) {
   .icecream-hero {
-    height: auto;
-    min-height: 100vh;
-    padding-top: 110px;
-    padding-bottom: 140px;
+    height: 100dvh;
+    min-height: -webkit-fill-available;
+    max-height: 100dvh;
+    padding: 16px 20px 14px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    justify-content: space-between;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
-  .icecream-visual-stage {
+  /* Top Bar */
+  .icecream-top {
     position: relative;
-    left: 0;
-    translate: 0 0;
-    top: 0;
-    bottom: auto;
-    width: 62vw;
-    max-width: 300px;
-    height: 300px;
-    margin: 0 auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 30;
+    margin-bottom: 2px;
   }
 
+  .icecream-logo {
+    font-size: 1.45rem;
+  }
+
+  .icecream-top-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Hide redundant "Ask Ice Cream" from header on mobile since it's prominent in the order row */
+  .icecream-top-nav .top-nav-pill:not(.top-nav-pill--cart) {
+    display: none;
+  }
+
+  .top-nav-pill--cart {
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    gap: 6px;
+    border-radius: 999px;
+  }
+
+  .cart-svg-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .top-cart-badge {
+    font-size: 0.64rem;
+    min-width: 16px;
+    height: 16px;
+  }
+
+  /* Stack Stage: hidden on mobile */
   .icecream-stack-stage {
     display: none;
   }
 
-  .icecream-content {
-    position: static;
+  /* Visual Stage: flex-fit in center without pushing content off */
+  .icecream-visual-stage {
+    position: relative;
+    left: auto;
+    translate: none;
+    top: auto;
+    bottom: auto;
+    flex: 1;
+    min-height: 0;
     width: 100%;
-    padding: 0 24px;
+    max-width: 280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .icecream-desc p,
+  .icecream-fly {
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+    bottom: 0;
+    height: 100%;
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .icecream-particles {
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+    top: -12%;
+    width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    z-index: 1;
+  }
+
+  /* Content: clean, unclipped typography and accessible buttons */
+  .icecream-content {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 12;
+  }
+
+  .icecream-title {
+    overflow: hidden;
+  }
+
   .icecream-title-inner {
+    font-size: clamp(2rem, 7.5vw, 2.5rem);
+    line-height: 1.05;
     max-width: 100%;
   }
 
-  .icecream-dots,
-  .icecream-socials {
-    position: absolute;
-    bottom: 24px;
+  .icecream-desc {
+    margin-top: 2px;
+    max-height: none;
+    overflow: visible;
   }
 
-  .icecream-top-nav {
-    display: none;
+  .icecream-desc p {
+    font-size: 0.88rem;
+    line-height: 1.42;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .icecream-order-row {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .icecream-order-btn {
+    flex: 1.15;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    text-align: center;
+    white-space: nowrap;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .icecream-ask-btn {
+    flex: 0.85;
+    padding: 12px 10px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    border-radius: 999px;
+    text-align: center;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Bottom Bar */
+  .icecream-bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin-top: 6px;
+    padding-top: 4px;
+    z-index: 15;
+  }
+
+  .icecream-dots {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .icecream-dot {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .icecream-dot::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    transition: all 0.25s ease;
+  }
+
+  .icecream-dot.is-active::before {
+    width: 10px;
+    height: 10px;
+    background: #ffffff;
+  }
+
+  .icecream-socials {
+    position: relative;
+    right: auto;
+    bottom: auto;
+  }
+
+  .social-icons-btn--instagram {
+    height: 32px;
+    padding: 0 12px;
+    font-size: 0.78rem;
+  }
+}
+
+/* Fallback for ultra-short mobile screens or landscape phones */
+@media (max-height: 580px) and (max-width: 860px) {
+  .icecream-hero {
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .icecream-visual-stage {
+    height: 180px;
+    min-height: 180px;
+    flex: none;
   }
 }
