@@ -212,45 +212,7 @@
   left: 96px;
   top: 25%;
   z-index: 12;
-  width: min(460px, calc(100vw - 96px));
-}
-
-/* Rating badge */
-.hero-rating-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #fff;
-  padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  margin-bottom: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.hero-rating-badge:hover {
-  background: rgba(255, 255, 255, 0.26);
-  transform: translateY(-1px);
-}
-
-.hero-rating-badge .star-icon {
-  color: #f1c40f;
-  font-size: 0.9rem;
-}
-
-.rating-dot {
-  opacity: 0.6;
-}
-
-.rating-caption {
-  opacity: 0.9;
-  font-weight: 600;
+  width: min(440px, calc(100vw - 96px));
 }
 
 .icecream-title {
@@ -271,121 +233,37 @@
 }
 
 .icecream-desc {
-  margin-top: 18px;
-  height: 6.6rem;
+  margin-top: 14px;
+  height: auto;
+  max-height: 5.2rem;
   overflow: hidden;
 }
 
 .icecream-desc p {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.96rem;
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.88);
   max-width: 380px;
-}
-
-/* Uiverse Portion Options Selector */
-.uiverse-portion-wrapper {
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.uiverse-portion-heading {
-  font-size: 0.76rem;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.uiverse-portion-group {
-  display: inline-flex;
-  background: rgba(16, 16, 22, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 9999px;
-  padding: 4px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.3);
-  gap: 4px;
-  max-width: 440px;
-}
-
-.uiverse-portion-option {
-  position: relative;
-  flex: 1;
-  cursor: pointer;
-  margin: 0;
-}
-
-.uiverse-portion-input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-.uiverse-portion-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid transparent;
-  user-select: none;
-}
-
-.uiverse-portion-card .portion-name {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
-  white-space: nowrap;
-}
-
-.uiverse-portion-card .portion-cost {
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.uiverse-portion-option:hover .uiverse-portion-card {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-.uiverse-portion-option.is-selected .uiverse-portion-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.12) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-  transform: translateY(-1px);
-}
-
-.uiverse-portion-option.is-selected .uiverse-portion-card .portion-name,
-.uiverse-portion-option.is-selected .uiverse-portion-card .portion-cost {
-  color: #fff;
 }
 
 .icecream-order-row {
   margin-top: 24px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
+  gap: 12px;
+  flex-wrap: nowrap;
 }
 
 .icecream-order-btn {
   background: transparent;
   color: #fff;
   font-weight: 600;
-  font-size: 0.95rem;
-  padding: 15px 34px;
+  font-size: 0.92rem;
+  padding: 13px 28px;
   border-radius: 999px;
   border: 1.5px solid rgba(255, 255, 255, 0.85);
   cursor: pointer;
+  white-space: nowrap;
   transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
 
@@ -400,12 +278,13 @@
   color: #fff;
   font-weight: 600;
   font-size: 0.9rem;
-  padding: 15px 24px;
+  padding: 13px 22px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.25s ease;
 }
 
@@ -414,47 +293,11 @@
   transform: translateY(-2px);
 }
 
-/* Floating side arrows */
-.slider-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: #fff;
-  font-size: 1.8rem;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 18;
-  transition: all 0.25s ease;
-}
-
-.slider-arrow:hover {
-  background: rgba(255, 255, 255, 0.35);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.slider-arrow--prev {
-  left: 24px;
-}
-
-.slider-arrow--next {
-  right: 24px;
-}
-
 /* Dots */
 .icecream-dots {
   position: absolute;
-  left: 48px;
-  bottom: 44px;
+  left: 96px;
+  bottom: 42px;
   z-index: 15;
   display: flex;
   align-items: center;

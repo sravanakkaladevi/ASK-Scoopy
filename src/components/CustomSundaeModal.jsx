@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useCart } from '../context/CartContext'
-import UiverseCurrencyOption from './UiverseCurrencyOption'
 import './CustomSundaeModal.css'
 
 const BASE_FLAVORS = [
@@ -114,12 +113,9 @@ export default function CustomSundaeModal() {
             <span className="sundae-mini-badge">Interactive Creamery</span>
             <h3 className="sundae-title">Design Your Custom Scoop</h3>
           </div>
-          <div className="sundae-header-actions">
-            <UiverseCurrencyOption compact />
-            <button className="sundae-close-btn" onClick={() => setIsCustomizerOpen(false)}>
-              ×
-            </button>
-          </div>
+          <button className="sundae-close-btn" onClick={() => setIsCustomizerOpen(false)}>
+            ×
+          </button>
         </div>
 
         <div className="sundae-modal-body">

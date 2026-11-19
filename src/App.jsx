@@ -7,7 +7,6 @@ import IceCreamHero from './components/IceCreamHero'
 import CartDrawer from './components/CartDrawer'
 import CheckoutModal from './components/CheckoutModal'
 import CustomSundaeModal from './components/CustomSundaeModal'
-import DynamicReviewsDrawer from './components/DynamicReviewsDrawer'
 import ToastContainer from './components/ToastContainer'
 
 function App() {
@@ -21,7 +20,6 @@ function App() {
       <CartDrawer />
       <CheckoutModal />
       <CustomSundaeModal />
-      <DynamicReviewsDrawer />
       <ToastContainer />
     </CartProvider>
   )

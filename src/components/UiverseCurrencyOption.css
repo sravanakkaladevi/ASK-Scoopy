@@ -1,97 +1,128 @@
-/* Uiverse.io inspired Currency Option Switcher */
-.uiverse-currency-wrapper {
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  user-select: none;
-}
-
-.uiverse-currency-container {
-  display: flex;
-  align-items: center;
-  background: rgba(18, 18, 24, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 9999px;
-  padding: 3px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.3);
-  position: relative;
-  gap: 2px;
-}
-
-.uiverse-currency-item {
+/* Uiverse Elegant Frosted Currency Dropdown */
+.uiverse-currency-dropdown {
   position: relative;
   display: inline-block;
-  margin: 0;
-  cursor: pointer;
+  user-select: none;
+  z-index: 50;
 }
 
-.uiverse-currency-input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-.uiverse-currency-btn {
+.uiverse-currency-trigger {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 6px 12px;
-  border-radius: 9999px;
-  color: rgba(255, 255, 255, 0.72);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  border: 1px solid transparent;
 }
 
-.uiverse-currency-btn .uiverse-flag {
-  font-size: 13px;
+.uiverse-currency-trigger:hover,
+.uiverse-currency-trigger.is-open {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.uiverse-curr-flag {
+  font-size: 1rem;
   line-height: 1;
 }
 
-.uiverse-currency-btn .uiverse-symbol {
+.uiverse-curr-symbol {
   font-weight: 800;
   color: #fff;
 }
 
-.uiverse-currency-btn .uiverse-code {
-  font-size: 11px;
-  opacity: 0.85;
+.uiverse-curr-code {
+  font-size: 0.78rem;
+  opacity: 0.9;
+  letter-spacing: 0.4px;
 }
 
-/* Hover State */
-.uiverse-currency-item:hover .uiverse-currency-btn {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
+.uiverse-curr-chevron {
+  font-size: 0.7rem;
+  opacity: 0.75;
+  margin-left: 2px;
+  transition: transform 0.2s ease;
 }
 
-/* Active Selected State (Uiverse Pill Highlight) */
-.uiverse-currency-item.is-active .uiverse-currency-btn {
-  color: #ffffff;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.14) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.6);
-  transform: translateY(-1px);
-}
-
-.uiverse-currency-item:active .uiverse-currency-btn {
-  transform: scale(0.95);
-}
-
-/* Compact version for drawers / modals */
-.uiverse-currency-wrapper.is-compact .uiverse-currency-btn {
-  padding: 4px 9px;
-  font-size: 11px;
+/* Floating Frosted Dropdown Menu */
+.uiverse-currency-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 155px;
+  background: rgba(18, 18, 26, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
   gap: 3px;
+  animation: curr-fade-in 0.2s ease-out;
+  z-index: 100;
 }
 
-.uiverse-currency-wrapper.is-compact .uiverse-currency-btn .uiverse-flag {
-  font-size: 11px;
+@keyframes curr-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.uiverse-currency-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s ease;
+}
+
+.uiverse-currency-menu-item:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.uiverse-currency-menu-item.is-selected {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.12) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.uiverse-curr-name {
+  flex: 1;
+}
+
+.uiverse-curr-check {
+  color: #ffd166;
+  font-weight: 800;
+  font-size: 0.85rem;
 }
