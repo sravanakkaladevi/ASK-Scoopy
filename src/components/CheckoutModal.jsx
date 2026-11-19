@@ -10,6 +10,8 @@ export default function CheckoutModal() {
     clearCart,
     orderTotal,
     addToast,
+    currency,
+    formatPrice,
   } = useCart()
 
   const [step, setStep] = useState(1) // 1: Shipping, 2: Slot & Payment, 3: Success
@@ -189,7 +191,7 @@ export default function CheckoutModal() {
 
             <div className="checkout-summary-strip">
               <span>Total to Pay:</span>
-              <span className="strip-price">₹{Math.round(orderTotal)}</span>
+              <span className="strip-price">{formatPrice(orderTotal)}</span>
             </div>
 
             <button type="submit" className="modal-primary-btn">
@@ -245,7 +247,7 @@ export default function CheckoutModal() {
 
             {/* Payment methods */}
             <div className="payment-method-box">
-              <label className="field-label">Payment Method (INR):</label>
+              <label className="field-label">Payment Method ({currency}):</label>
               <div className="payment-tabs-row">
                 <button
                   type="button"
@@ -336,7 +338,7 @@ export default function CheckoutModal() {
                 ← Back
               </button>
               <button type="submit" className="modal-primary-btn">
-                <span>Place Order (₹{Math.round(orderTotal)})</span>
+                <span>Place Order ({formatPrice(orderTotal)})</span>
                 <span>🍨</span>
               </button>
             </div>

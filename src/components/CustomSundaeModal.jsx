@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import UiverseCurrencyOption from './UiverseCurrencyOption'
 import './CustomSundaeModal.css'
 
 const BASE_FLAVORS = [
@@ -33,7 +34,7 @@ const TOPPINGS = [
 ]
 
 export default function CustomSundaeModal() {
-  const { isCustomizerOpen, setIsCustomizerOpen, addToCart } = useCart()
+  const { isCustomizerOpen, setIsCustomizerOpen, addToCart, formatPrice } = useCart()
 
   const [selectedFlavors, setSelectedFlavors] = useState(['blueberry'])
   const [selectedVessel, setSelectedVessel] = useState(VESSELS[0])
@@ -113,9 +114,12 @@ export default function CustomSundaeModal() {
             <span className="sundae-mini-badge">Interactive Creamery</span>
             <h3 className="sundae-title">Design Your Custom Scoop</h3>
           </div>
-          <button className="sundae-close-btn" onClick={() => setIsCustomizerOpen(false)}>
-            ×
-          </button>
+          <div className="sundae-header-actions">
+            <UiverseCurrencyOption compact />
+            <button className="sundae-close-btn" onClick={() => setIsCustomizerOpen(false)}>
+              ×
+            </button>
+          </div>
         </div>
 
         <div className="sundae-modal-body">
@@ -138,7 +142,7 @@ export default function CustomSundaeModal() {
             {selectedDrizzle.id !== 'none' && (
               <span className="drizzle-badge">🍯 {selectedDrizzle.name}</span>
             )}
-            <span className="total-badge">₹{totalPrice}</span>
+            <span className="total-badge">{formatPrice(totalPrice)}</span>
           </div>
 
           {/* Step 1: Base Flavors */}
@@ -156,7 +160,7 @@ export default function CustomSundaeModal() {
                   >
                     <span className="swatch" style={{ backgroundColor: f.color }} />
                     <span>{f.name}</span>
-                    {f.price > 0 && <span className="chip-extra">+₹{f.price}</span>}
+                    {f.price > 0 && <span className="chip-extra">+{formatPrice(f.price)}</span>}
                   </button>
                 )
               })}
@@ -178,7 +182,7 @@ export default function CustomSundaeModal() {
                   >
                     <span>{v.icon}</span>
                     <span>{v.name}</span>
-                    <span className="chip-extra">{v.price === 0 ? 'Free' : `+₹${v.price}`}</span>
+                    <span className="chip-extra">{v.price === 0 ? 'Free' : `+${formatPrice(v.price)}`}</span>
                   </button>
                 )
               })}
@@ -199,7 +203,7 @@ export default function CustomSundaeModal() {
                     onClick={() => setSelectedDrizzle(d)}
                   >
                     <span>{d.name}</span>
-                    <span className="chip-extra">{d.price === 0 ? 'Free' : `+₹${d.price}`}</span>
+                    <span className="chip-extra">{d.price === 0 ? 'Free' : `+${formatPrice(d.price)}`}</span>
                   </button>
                 )
               })}
@@ -221,7 +225,7 @@ export default function CustomSundaeModal() {
                   >
                     <span>{isSel ? '✓ ' : '+ '}</span>
                     <span>{t.name}</span>
-                    <span className="chip-extra">+₹{t.price}</span>
+                    <span className="chip-extra">+{formatPrice(t.price)}</span>
                   </button>
                 )
               })}
@@ -233,7 +237,7 @@ export default function CustomSundaeModal() {
         <div className="sundae-modal-footer">
           <div className="sundae-footer-pricing">
             <span className="footer-label">Total Custom Creation:</span>
-            <span className="footer-price">₹{totalPrice}</span>
+            <span className="footer-price">{formatPrice(totalPrice)}</span>
           </div>
           <button className="sundae-add-btn" onClick={handleAddCustomSundae}>
             Add Custom Sundae to Bag 🍨

@@ -4,7 +4,14 @@ import { flavors } from '../data/flavors'
 import { products } from '../data/products'
 import { useCart } from '../context/CartContext'
 import SocialIcons from './SocialIcons'
+import UiverseCurrencyOption from './UiverseCurrencyOption'
 import './IceCreamHero.css'
+
+const PORTION_OPTIONS = [
+  { id: 'single', label: 'Single Scoop', multiplier: 1 },
+  { id: 'double', label: 'Double Scoop', multiplier: 1.55 },
+  { id: 'pint', label: 'Artisan Pint', multiplier: 2.7 },
+]
 
 const BG_TRANSITION = { duration: 0.7, ease: 'easeInOut' }
 const WHEEL_COOLDOWN = 800
@@ -53,7 +60,10 @@ const IceCreamHero = () => {
     setIsReviewsOpen,
     setIsCustomizerOpen,
     setActiveFlavor,
+    formatPrice,
   } = useCart()
+
+  const [selectedPortion, setSelectedPortion] = useState('single')
 
   const [line1, line2] = current.name.split('\n')
   const cooling = useRef(false)
@@ -97,8 +107,11 @@ const IceCreamHero = () => {
     flavors[(index + 3) % len],
   ]
 
+  const activePortion = PORTION_OPTIONS.find((p) => p.id === selectedPortion) || PORTION_OPTIONS[0]
+  const portionPrice = Math.round(currentProduct.price * activePortion.multiplier)
+
   const handleOrder = () => {
-    addToCart(currentProduct, { label: 'Single Scoop', price: currentProduct.price }, 1)
+    addToCart(currentProduct, { label: activePortion.label, price: portionPrice }, 1)
   }
 
   return (
@@ -113,9 +126,7 @@ const IceCreamHero = () => {
 
         {/* Sleek Frosted Glass E-Commerce Controls */}
         <div className="icecream-top-nav">
-          <div className="top-currency-tag" title="Prices in Indian Rupee">
-            <span>🇮🇳 ₹ INR</span>
-          </div>
+          <UiverseCurrencyOption />
 
           <button
             className="top-nav-pill"
@@ -264,12 +275,39 @@ const IceCreamHero = () => {
           </AnimatePresence>
         </div>
 
+        {/* Uiverse Portion Options Selector */}
+        <div className="uiverse-portion-wrapper">
+          <span className="uiverse-portion-heading">Select Portion:</span>
+          <div className="uiverse-portion-group">
+            {PORTION_OPTIONS.map((opt) => {
+              const isSel = selectedPortion === opt.id
+              const optPrice = Math.round(currentProduct.price * opt.multiplier)
+              return (
+                <label key={opt.id} className={`uiverse-portion-option ${isSel ? 'is-selected' : ''}`}>
+                  <input
+                    type="radio"
+                    name="hero-portion-radio"
+                    value={opt.id}
+                    checked={isSel}
+                    onChange={() => setSelectedPortion(opt.id)}
+                    className="uiverse-portion-input"
+                  />
+                  <span className="uiverse-portion-card">
+                    <span className="portion-name">{opt.label}</span>
+                    <span className="portion-cost">{formatPrice(optPrice)}</span>
+                  </span>
+                </label>
+              )
+            })}
+          </div>
+        </div>
+
         <div className="icecream-order-row">
           <button
             className="icecream-order-btn"
             onClick={handleOrder}
           >
-            <span>Order Scoop • ${currentProduct.price.toFixed(2)}</span>
+            <span>Order {activePortion.label} • {formatPrice(portionPrice)}</span>
           </button>
 
           <button

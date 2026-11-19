@@ -283,8 +283,94 @@
   max-width: 380px;
 }
 
+/* Uiverse Portion Options Selector */
+.uiverse-portion-wrapper {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.uiverse-portion-heading {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.uiverse-portion-group {
+  display: inline-flex;
+  background: rgba(16, 16, 22, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  padding: 4px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  gap: 4px;
+  max-width: 440px;
+}
+
+.uiverse-portion-option {
+  position: relative;
+  flex: 1;
+  cursor: pointer;
+  margin: 0;
+}
+
+.uiverse-portion-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.uiverse-portion-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid transparent;
+  user-select: none;
+}
+
+.uiverse-portion-card .portion-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+}
+
+.uiverse-portion-card .portion-cost {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.uiverse-portion-option:hover .uiverse-portion-card {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.uiverse-portion-option.is-selected .uiverse-portion-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.12) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.uiverse-portion-option.is-selected .uiverse-portion-card .portion-name,
+.uiverse-portion-option.is-selected .uiverse-portion-card .portion-cost {
+  color: #fff;
+}
+
 .icecream-order-row {
-  margin-top: 26px;
+  margin-top: 24px;
   display: flex;
   align-items: center;
   gap: 14px;

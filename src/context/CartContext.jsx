@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
+import { CURRENCIES } from '../data/currencies'
 
 const CartContext = createContext(null)
 
@@ -26,12 +27,36 @@ export const CartProvider = ({ children }) => {
     }
   })
 
-  // Currency configuration (INR - Indian Rupee)
-  const currency = 'INR'
-  const currencySymbol = '₹'
+  // Currency configuration (INR - Indian Rupee default)
+  const [currency, setCurrency] = useState(() => {
+    try {
+      return localStorage.getItem('scoopy_currency') || 'INR'
+    } catch {
+      return 'INR'
+    }
+  })
 
-  const formatPrice = (amount) => {
-    return `${currencySymbol}${Math.round(amount)}`
+  const currentCurrency = CURRENCIES[currency] || CURRENCIES.INR
+  const currencySymbol = currentCurrency.symbol
+
+  const changeCurrency = (newCode) => {
+    if (CURRENCIES[newCode]) {
+      setCurrency(newCode)
+      try {
+        localStorage.setItem('scoopy_currency', newCode)
+      } catch {
+        // ignore
+      }
+    }
+  }
+
+  const formatPrice = (amountInINR) => {
+    const rate = currentCurrency.rate || 1
+    const converted = amountInINR * rate
+    if (currency === 'INR') {
+      return `${currencySymbol}${Math.round(converted)}`
+    }
+    return `${currencySymbol}${converted.toFixed(2)}`
   }
 
   // UI state
@@ -247,6 +272,9 @@ export const CartProvider = ({ children }) => {
         removeToast,
         currency,
         currencySymbol,
+        currentCurrency,
+        changeCurrency,
+        currencies: CURRENCIES,
         formatPrice,
       }}
     >

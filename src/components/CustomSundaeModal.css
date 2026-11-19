@@ -33,6 +33,12 @@
   border-bottom: 1px solid #f0f0f5;
 }
 
+.sundae-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .sundae-mini-badge {
   font-size: 0.68rem;
   font-weight: 800;
@@ -134,27 +140,39 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #f7f7fa;
-  border: 1.5px solid #e4e4ed;
-  padding: 8px 12px;
-  border-radius: 10px;
+  background: #ffffff;
+  border: 1.5px solid #e5e0f0;
+  padding: 10px 14px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  color: #333;
-  transition: all 0.15s ease;
+  color: #2c2c38;
+  transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  position: relative;
+  user-select: none;
 }
 
 .custom-chip:hover {
-  border-color: #7c55d6;
+  border-color: #9b7dea;
   background: #fbf9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 85, 214, 0.12);
+}
+
+.custom-chip:active {
+  transform: scale(0.96);
 }
 
 .custom-chip.is-selected {
-  background: #f1ecfc;
+  background: linear-gradient(135deg, #f4eeff 0%, #ede4fc 100%);
   border-color: #7c55d6;
-  color: #6438c8;
+  color: #5527b8;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(124, 85, 214, 0.2);
+  transform: translateY(-1px);
 }
 
 .swatch {

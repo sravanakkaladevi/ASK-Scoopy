@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import UiverseCurrencyOption from './UiverseCurrencyOption'
 import './CartDrawer.css'
 
 export default function CartDrawer() {
@@ -27,9 +28,11 @@ export default function CartDrawer() {
     removeCoupon,
     couponError,
     setIsCheckoutOpen,
+    formatPrice,
   } = useCart()
 
   const [couponInput, setCouponInput] = useState('')
+  const [isExpressDelivery, setIsExpressDelivery] = useState(false)
 
   if (!isCartOpen) return null
 
@@ -60,13 +63,16 @@ export default function CartDrawer() {
             <h3 className="drawer-title">Your Sweet Bag</h3>
             <span className="drawer-count-badge">{cartCount} items</span>
           </div>
-          <button
-            className="drawer-close-btn"
-            onClick={() => setIsCartOpen(false)}
-            aria-label="Close cart"
-          >
-            ×
-          </button>
+          <div className="cart-header-actions">
+            <UiverseCurrencyOption compact />
+            <button
+              className="drawer-close-btn"
+              onClick={() => setIsCartOpen(false)}
+              aria-label="Close cart"
+            >
+              ×
+            </button>
+          </div>
         </div>
 
         {/* Free Delivery Meter */}
@@ -77,7 +83,7 @@ export default function CartDrawer() {
             </p>
           ) : (
             <p className="shipping-meter-text">
-              Add <strong>₹{Math.round(amountNeededForFreeShipping)}</strong> more to get{' '}
+              Add <strong>{formatPrice(amountNeededForFreeShipping)}</strong> more to get{' '}
               <strong>FREE Cold Shipping</strong>!
             </p>
           )}
@@ -149,10 +155,10 @@ export default function CartDrawer() {
 
                       <div className="item-pricing">
                         <span className="item-total-price">
-                          ₹{Math.round(item.price * item.quantity)}
+                          {formatPrice(item.price * item.quantity)}
                         </span>
                         {item.quantity > 1 && (
-                          <span className="item-unit-price">₹{Math.round(item.price)} ea</span>
+                          <span className="item-unit-price">{formatPrice(item.price)} ea</span>
                         )}
                       </div>
                     </div>
@@ -197,24 +203,55 @@ export default function CartDrawer() {
               {couponError && <p className="coupon-error-text">{couponError}</p>}
             </div>
 
-            {/* Gratuity / Tip Selection */}
+            {/* Uiverse Delivery Speed Option Switch */}
+            <div className="uiverse-express-box">
+              <label className="uiverse-switch-container">
+                <input
+                  type="checkbox"
+                  checked={isExpressDelivery}
+                  onChange={(e) => setIsExpressDelivery(e.target.checked)}
+                  className="uiverse-switch-input"
+                />
+                <span className="uiverse-switch-track">
+                  <span className="uiverse-switch-thumb" />
+                </span>
+                <span className="uiverse-switch-text">
+                  <span className="toggle-main">⚡ Priority Nitro Freeze (-18°C)</span>
+                  <span className="toggle-sub">Packed with dry ice & delivered in 35 mins (+{formatPrice(49)})</span>
+                </span>
+              </label>
+            </div>
+
+            {/* Uiverse Gratuity / Tip Options Radio Group */}
             <div className="cart-tip-section">
-              <span className="tip-title">Tip the Ice Cream Churners:</span>
-              <div className="tip-pills-row">
+              <div className="tip-header-row">
+                <span className="tip-title">Tip the Ice Cream Churners:</span>
+                {tipAmount > 0 && <span className="tip-selected-val">+{formatPrice(tipAmount)}</span>}
+              </div>
+              <div className="uiverse-tip-radios">
                 {[
-                  { label: 'None', val: 0 },
-                  { label: '₹20', val: 0.05 },
-                  { label: '₹50', val: 0.1 },
-                  { label: '₹100', val: 0.15 },
+                  { label: 'None', val: 0, sub: '0%' },
+                  { label: '₹20', val: 0.05, sub: '5%' },
+                  { label: '₹50', val: 0.1, sub: '10%' },
+                  { label: '₹100', val: 0.15, sub: '15%' },
                 ].map((t) => (
-                  <button
+                  <label
                     key={t.label}
-                    type="button"
-                    className={`tip-pill-btn ${tipRate === t.val ? 'is-selected' : ''}`}
-                    onClick={() => setTipRate(t.val)}
+                    className={`uiverse-tip-card ${tipRate === t.val ? 'is-selected' : ''}`}
                   >
-                    {t.label}
-                  </button>
+                    <input
+                      type="radio"
+                      name="uiverse-cart-tip"
+                      value={t.val}
+                      checked={tipRate === t.val}
+                      onChange={() => setTipRate(t.val)}
+                      className="uiverse-tip-input"
+                    />
+                    <span className="uiverse-tip-body">
+                      <span className="tip-main">{t.label}</span>
+                      <span className="tip-sub">{t.sub}</span>
+                    </span>
+                  </label>
                 ))}
               </div>
             </div>
@@ -224,44 +261,53 @@ export default function CartDrawer() {
               <div className="cost-breakdown">
                 <div className="cost-line">
                   <span>Subtotal</span>
-                  <span>₹{Math.round(cartSubtotal)}</span>
+                  <span>{formatPrice(cartSubtotal)}</span>
                 </div>
 
                 {appliedCoupon && (
                   <div className="cost-line discount-line">
                     <span>Discount ({appliedCoupon.code})</span>
-                    <span>-₹{Math.round(discountAmount)}</span>
+                    <span>-{formatPrice(discountAmount)}</span>
                   </div>
                 )}
 
                 <div className="cost-line">
                   <span>Cold-Chain Dry Ice Shipping</span>
-                  <span>{isFreeShipping ? 'FREE' : `₹${shippingCost}`}</span>
+                  <span>{isFreeShipping ? 'FREE' : formatPrice(shippingCost)}</span>
                 </div>
+
+                {isExpressDelivery && (
+                  <div className="cost-line">
+                    <span>Nitro Freeze Priority</span>
+                    <span>+{formatPrice(49)}</span>
+                  </div>
+                )}
 
                 {tipAmount > 0 && (
                   <div className="cost-line">
                     <span>Crew Gratuity</span>
-                    <span>₹{Math.round(tipAmount)}</span>
+                    <span>{formatPrice(tipAmount)}</span>
                   </div>
                 )}
 
                 <div className="cost-line">
                   <span>GST (5%)</span>
-                  <span>₹{Math.round(taxAmount)}</span>
+                  <span>{formatPrice(taxAmount)}</span>
                 </div>
 
                 <div className="cost-divider" />
 
                 <div className="cost-line total-line">
                   <span>Total Amount</span>
-                  <span className="final-total-tag">₹{Math.round(orderTotal)}</span>
+                  <span className="final-total-tag">
+                    {formatPrice(orderTotal + (isExpressDelivery ? 49 : 0))}
+                  </span>
                 </div>
               </div>
 
               {/* Checkout Button */}
               <button className="proceed-checkout-btn" onClick={handleProceedToCheckout}>
-                <span>Proceed to Checkout (₹{Math.round(orderTotal)})</span>
+                <span>Proceed to Checkout ({formatPrice(orderTotal + (isExpressDelivery ? 49 : 0))})</span>
                 <span>→</span>
               </button>
 
